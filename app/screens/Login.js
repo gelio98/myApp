@@ -1,11 +1,16 @@
 import React from 'react';
-import { ImageBackground, StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
+import { ImageBackground, StyleSheet, View, Text, Image, TouchableOpacity, TextInput } from 'react-native';
 import { FacebookSocialButton } from "react-native-social-buttons";
  
 
 function Login(props) {
     return (
         <ImageBackground style={styles.background} source={require ("../assets/background.jpg")}>
+            <View style={styles.LoginContext}>
+            <TextInput> Hola </TextInput>
+            
+            </View>
+
             <TouchableOpacity> 
             <View style={styles.loginButtonGoogle}> 
             <Image
@@ -70,8 +75,12 @@ const styles = StyleSheet.create({
         alignItems: "center",
         flexDirection: "row",
     },
-    ButtonText: {
-       
+    LoginContext: {
+        width: "100%",
+        height: "40%",
+        backgroundColor: "blue",
+        position: "absolute",
+        top: "20%"
     }, 
 
     facebookStyle: {
@@ -90,7 +99,7 @@ const styles = StyleSheet.create({
       },
       imageIconStyle: {
         padding: 10,
-        marginLeft: 15,
+        marginLeft: 20,
         height: 25,
         width: 25,
         resizeMode: "stretch",
