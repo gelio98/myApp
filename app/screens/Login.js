@@ -1,13 +1,32 @@
 import React from 'react';
 import { ImageBackground, StyleSheet, View, Text, Image, TouchableOpacity, TextInput } from 'react-native';
 import { FacebookSocialButton } from "react-native-social-buttons";
+import AppTextInput from "../components/TextInput"
+import AppButton from "../components/ButtonLogin"
  
 
 function Login(props) {
     return (
-        <ImageBackground style={styles.background} source={require ("../assets/background.jpg")}>
+        <ImageBackground resizeMode="cover" style={styles.background} source={require ("../assets/background.jpg")}>
             <View style={styles.LoginContext}>
-            <TextInput> Hola </TextInput>
+            <AppTextInput
+            autoCapitalize="none"
+            autoCorrect={false}
+            icon="email"
+            keyboardType="email-adress"
+            placeholder="Email"
+            textContenType="emailAddress" />
+
+            <AppTextInput
+            autoCapitalize="none"
+            autoCorrect={false}
+            icon="lock"
+            keyboardType="email-adress"
+            placeholder="Password"
+            secureTextEntry
+            textContenType="password" />
+
+            <AppButton title="Login" color="secondary" ></AppButton>
             
             </View>
 
@@ -47,7 +66,8 @@ function Login(props) {
 const styles = StyleSheet.create({
     background: {
         flex: 1,
-        justifyContent: "flex-end"
+        justifyContent: "flex-end",
+        
     }, 
     loginButtonGoogle: {
         width: "100%",
@@ -70,7 +90,7 @@ const styles = StyleSheet.create({
     loginButtonRegister: {
         width: "100%",
         height: 50,
-        backgroundColor: "orange",
+        backgroundColor: "#77DD77",
         justifyContent: "center",
         alignItems: "center",
         flexDirection: "row",
@@ -78,9 +98,10 @@ const styles = StyleSheet.create({
     LoginContext: {
         width: "100%",
         height: "40%",
-        backgroundColor: "blue",
+        //backgroundColor: "blue",
         position: "absolute",
-        top: "20%"
+        top: "30%",
+        padding: 20
     }, 
 
     facebookStyle: {
