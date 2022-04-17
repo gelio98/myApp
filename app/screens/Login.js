@@ -13,7 +13,7 @@ function Login(props) {
             autoCapitalize="none"
             autoCorrect={false}
             icon="email"
-            keyboardType="email-adress"
+        
             placeholder="Email"
             textContenType="emailAddress" />
 
@@ -21,7 +21,7 @@ function Login(props) {
             autoCapitalize="none"
             autoCorrect={false}
             icon="lock"
-            keyboardType="email-adress"
+  
             placeholder="Password"
             secureTextEntry
             textContenType="password" />
@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
     background: {
         flex: 1,
         justifyContent: "flex-end",
+        backgroundColor: "white"
         
     }, 
     loginButtonGoogle: {

@@ -3,6 +3,8 @@ import { StyleSheet, Text, TouchableOpacity , Image} from "react-native"
 
 import colors from "../config/colors"
 
+
+
 const AppButtonLogin = ({ title, onPress}) => {
     return (
         <TouchableOpacity
@@ -10,6 +12,7 @@ const AppButtonLogin = ({ title, onPress}) => {
             onPress={onPress}
             activeOpacity={0.5}
         >
+
 
         <Image
                  source={require("../assets/huella.png")} style={styles.imageIconStyle1}
@@ -37,7 +40,7 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         width: "100%",
         marginVertical: 10,
-        backgroundColor: "#77DD77",
+        backgroundColor: colors.green,
         borderColor: "black"
         
     },
