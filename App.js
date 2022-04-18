@@ -4,7 +4,8 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import SplashScreen from './app/screens/SplashScreen'
 import Login from './app/screens/Login';
 import Card from './app/components/Card';
-import ListingDetailsScreen from './app/components/ListingDetailsScreen';
+import ListingDetailsScreen from './app/screens/ListingDetailsScreen';
+import MessagesScreen from './app/screens/MessagesScreen';
 
 
 
@@ -14,8 +15,8 @@ export default function App() {
   
   return (
    
-    <View style={styles.container}> 
-      <ListingDetailsScreen></ListingDetailsScreen>
+    <View > 
+      <MessagesScreen></MessagesScreen> 
     </View>
 
    
@@ -30,16 +31,11 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-		backgroundColor: 'red',
+		backgroundColor: 'white',
 		//padding: "2%",
-    paddingTop: "20%"
+   // paddingTop: "20%"
 
-	},
-  iconStyle: {
-    backgroundColor: "orange",
-    alignItems: "flex-start",
-    flex: 0.5
-  },
+  }
 });
 
 
