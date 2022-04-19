@@ -15,9 +15,15 @@ export default function App() {
   
   return (
    
-    <View > 
-      <MessagesScreen></MessagesScreen> 
-    </View>
+    
+      <View>
+        <Card
+      image={require("./app/assets/kitty-needs-love.png")}
+      title="hola"
+      subTitle="gatito"></Card> 
+      </View>
+      
+    
 
    
     /*
@@ -31,9 +37,10 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-		backgroundColor: 'white',
+	//	backgroundColor: 'white',
 		//padding: "2%",
-   // paddingTop: "20%"
+    //paddingTop: "20%"
+    flex: 1
 
   }
 });

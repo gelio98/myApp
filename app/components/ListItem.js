@@ -22,7 +22,7 @@ function ListItem({
 }) {
   return (
     <View style={styles.touch}>
-        <GestureHandlerRootView>
+       <GestureHandlerRootView>
     <Swipeable renderRightActions={renderRightActions}>
       <TouchableHighlight underlayColor={colors.light} onPress={onPress}>
         <View style={styles.container}>
