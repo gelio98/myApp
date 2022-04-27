@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   touch: {
-      flex: 1,
+      //flex: 1,
      
   }
 });
