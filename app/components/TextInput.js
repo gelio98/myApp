@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
         ...defaultStyles.formField,
         flexDirection: "row",
         paddingHorizontal: 10,
-        borderColor: "black"
+        borderColor: colors.light
     },
     icon: {
         color: colors.black,
