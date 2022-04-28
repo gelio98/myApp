@@ -1,32 +1,56 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ImageBackground, StyleSheet, View, Text, Image, TouchableOpacity, TextInput } from 'react-native';
 import { FacebookSocialButton } from "react-native-social-buttons";
 import AppTextInput from "../components/TextInput"
 import AppButton from "../components/ButtonLogin"
- 
+import { Formik } from 'formik'
+import * as Yup from 'yup'
+import AppText from '../components/AppText';
+
+
+const validationSchema = Yup.object().shape({
+    email: Yup.string().required().email().label("Email"),
+    password: Yup.string().required().min(6).label("Password")
+}) 
 
 function Login(props) {
+
+    
+
     return (
         <ImageBackground resizeMode="cover" style={styles.background} source={require ("../assets/background.jpg")}>
             <View style={styles.LoginContext}>
+                <Formik
+                    initialValues={{ email: '', password: ''}}
+                    onSubmit={values => console.log(values)}
+                    validationSchema={validationSchema}
+                >
+                    {({ handleChange, handleSubmit, errors }) => (
+                        <>
             <AppTextInput
             autoCapitalize="none"
             autoCorrect={false}
             icon="email"
-        
+            onChangeText={handleChange("email")}
             placeholder="Email"
             textContenType="emailAddress" />
-
+            <AppText style={{ color: 'red' }}> {errors.email} </AppText>
             <AppTextInput
             autoCapitalize="none"
             autoCorrect={false}
             icon="lock"
-  
+            onChangeText={handleChange("password")}
             placeholder="Password"
             secureTextEntry
             textContenType="password" />
 
-            <AppButton title="Login" color="secondary" ></AppButton>
+            <AppText style={{ color: 'red' }}> {errors.password} </AppText>
+
+            <AppButton title="Login" color="secondary" onPress={handleSubmit}></AppButton>
+                        </>
+                    )}
+                 </Formik>
+            
             
             </View>
 
