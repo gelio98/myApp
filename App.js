@@ -4,6 +4,7 @@ import Screen from "./app/components/Screen";
 import AppPicker from "./app/components/AppPicker";
 import AppTextInput from "./app/components/AppTextInput";
 import Login from "./app/screens/Login";
+import ListingEditScreen from "./app/components/screens/ListingEditScreen";
 
 const categories = [
   { label: "Furniture", value: 1 },
@@ -16,7 +17,7 @@ export default function App() {
 
   return (
     
-      <Login> </Login>
+      <ListingEditScreen> </ListingEditScreen>
   
   );
 }

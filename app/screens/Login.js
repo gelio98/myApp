@@ -3,9 +3,11 @@ import { ImageBackground, StyleSheet, View, Text, Image, TouchableOpacity, TextI
 import { FacebookSocialButton } from "react-native-social-buttons";
 import AppTextInput from "../components/TextInput"
 import AppButton from "../components/ButtonLogin"
+import ErrorMessage from '../components/forms/ErrorMessage';
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import AppText from '../components/AppText';
+import AppFormField from '../components/forms/AppFormField';
 
 
 const validationSchema = Yup.object().shape({
@@ -25,26 +27,31 @@ function Login(props) {
                     onSubmit={values => console.log(values)}
                     validationSchema={validationSchema}
                 >
-                    {({ handleChange, handleSubmit, errors }) => (
+                    {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
                         <>
-            <AppTextInput
+            <AppFormField
             autoCapitalize="none"
             autoCorrect={false}
             icon="email"
             onChangeText={handleChange("email")}
+            onBlur={ () => setFieldTouched("email")}
             placeholder="Email"
+            name="email"
             textContenType="emailAddress" />
-            <AppText style={{ color: 'red' }}> {errors.email} </AppText>
-            <AppTextInput
+        
+            <AppFormField
             autoCapitalize="none"
             autoCorrect={false}
             icon="lock"
+            onBlur={ () => setFieldTouched("password")}
             onChangeText={handleChange("password")}
+            name="password"
             placeholder="Password"
             secureTextEntry
+
             textContenType="password" />
 
-            <AppText style={{ color: 'red' }}> {errors.password} </AppText>
+         
 
             <AppButton title="Login" color="secondary" onPress={handleSubmit}></AppButton>
                         </>
