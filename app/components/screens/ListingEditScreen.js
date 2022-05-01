@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import * as Yup from "yup";
+import CategoryPickerItem from "../CategoryPickerItem";
 
 import {
   AppForm as Form,
@@ -36,7 +37,10 @@ function ListingEditScreen() {
         validationSchema={validationSchema}
       >
         <FormField maxLength={255} name="title" placeholder="Title" />
-        <Picker items={categories} name="category" placeholder="Category" />
+        <Picker items={categories} name="category" placeholder="Category" 
+        PickerItemComponent={CategoryPickerItem} 
+        numberOfColumns={3}
+        />
         <FormField
           maxLength={255}
           multiline
