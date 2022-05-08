@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import * as Yup from "yup";
 import CategoryPickerItem from "../CategoryPickerItem";
+
 
 import {
   AppForm as Form,
@@ -11,6 +12,8 @@ import {
 } from "../forms";
 import FormImagePicker from "../forms/FormImagePicker";
 import Screen from "../Screen";
+import AppButton from "../AppButton";
+import useLocation from "../../hooks/useLocation";
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required().min(1).label("Title"),
@@ -27,34 +30,44 @@ const categories = [
 ];
 
 function ListingEditScreen() {
+  
+  const location = useLocation();
+
   return (
-    <Screen style={styles.container}>
-      <Form
-        initialValues={{
-          title: "",
-          description: "",
-          category: null,
-          images: []
-        }}
-        onSubmit={(values) => console.log(values)}
-        validationSchema={validationSchema}
-      >
-        <FormImagePicker name="images" />
-        <FormField maxLength={255} name="title" placeholder="Title" />
-        <Picker items={categories} name="category" placeholder="Category" 
-        PickerItemComponent={CategoryPickerItem} 
-        numberOfColumns={3}
-        />
-        <FormField
-          maxLength={255}
-          multiline
-          name="description"
-          numberOfLines={3}
-          placeholder="Description"
-        />
-        <SubmitButton title="Post" />
-      </Form>
-    </Screen>
+    
+      <Screen style={styles.container}>
+        <Form
+          initialValues={{
+            title: "",
+            price: "",
+            description: "",
+            category: null,
+            images: [],
+          }}
+          onSubmit={(values) => console.log(location)}
+          validationSchema={validationSchema}
+        >
+          <FormImagePicker name="images" />
+          <FormField maxLength={255} name="title" placeholder="Title" />
+          
+          <Picker
+            items={categories}
+            name="category"
+            numberOfColumns={3}
+            PickerItemComponent={CategoryPickerItem}
+            placeholder="Category"
+            
+          />
+          <FormField
+            maxLength={255}
+            multiline
+            name="description"
+            numberOfLines={3}
+            placeholder="Description"
+          />
+          <SubmitButton title="Post" />
+        </Form>
+      </Screen>
   );
 }
 
