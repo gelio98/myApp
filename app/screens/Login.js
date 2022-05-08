@@ -8,6 +8,7 @@ import { Formik } from 'formik'
 import * as Yup from 'yup'
 import AppText from '../components/AppText';
 import AppFormField from '../components/forms/AppFormField';
+import routes from "../navigation/routes";
 
 
 const validationSchema = Yup.object().shape({
@@ -15,7 +16,7 @@ const validationSchema = Yup.object().shape({
     password: Yup.string().required().min(6).label("Password")
 }) 
 
-function Login(props) {
+function Login( {navigation} ) {
 
     
 
@@ -79,7 +80,7 @@ function Login(props) {
             </View> 
             </TouchableOpacity>
 
-            <TouchableOpacity> 
+            <TouchableOpacity onPress={() => navigation.navigate(routes.REGISTER)}> 
             <View style={styles.loginButtonRegister}> 
             <Image
                  source={require("../assets/huella.png")} style={styles.imageIconStyle}

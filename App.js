@@ -9,6 +9,8 @@ import ListItem from "./app/components/ListItem";
 import MessagesScreen from './app/screens/MessagesScreen'
 import ImageInput from "./app/components/ImageInput";
 import ImageInputList from "./app/components/ImageInputList";
+import { NavigationContainer } from "@react-navigation/native";
+import AuthNavigator from "./app/navigation/AuthNavigator";
 const categories = [
   { label: "Furniture", value: 1 },
   { label: "Clothing", value: 2 },
@@ -25,7 +27,9 @@ export default function App() {
     setImageUris(imageUris.filter(imageUri => imageUri !== uri))
   }
   return (
-    <ListingEditScreen></ListingEditScreen>
+    <NavigationContainer>
+      <AuthNavigator />
+    </NavigationContainer>
      
       
   
