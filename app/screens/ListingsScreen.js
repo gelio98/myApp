@@ -1,8 +1,12 @@
 import React from 'react';
-import { FlatList, StyleSheet } from 'react-native';
+import { FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import Screen from '../components/Screen'
 import Card from '../components/Card'
 import colors from '../config/colors'
+import AppText from '../components/AppText';
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import routes from "../navigation/routes";
+
 
 const listings = [{
     id: 1,
@@ -13,8 +17,8 @@ const listings = [{
 
 {
     id: 2,
-    tittle: 'Kitty2',
-    description: 'This kitty2 searchs for love',
+    tittle: 'Kitty2 his kitty2 searchs for love jahdahdaduuasdhiugfeugiyegyiegriyegtyegtegrouterhtnerthos',
+    description: 'This kitty2 searchs for love jahdahdaduuasdhiugfeugiyegyiegriyegtyegtegrouterhtnerthouehtrethuoerhtenutuguqiy',
     image: require("../assets/kitty-needs-love.png")
 },
 {
@@ -35,7 +39,7 @@ const listings = [{
 
 ];
 
-function ListingsScreen(props) {
+function ListingsScreen( {navigation} ) {
     return (
        <Screen style={styles.screen}>
            <FlatList
@@ -49,6 +53,15 @@ function ListingsScreen(props) {
             />
             }
            />
+
+    <TouchableOpacity
+        style={styles.roundButton1}
+        onPress={() => navigation.navigate(routes.LISTING_EDIT)} >
+        <MaterialCommunityIcons 
+        style={styles.rotate90}
+        size={40}
+        name="paw" />
+      </TouchableOpacity>
            
        </Screen>
     );
@@ -61,6 +74,22 @@ const styles = StyleSheet.create({
     screen: {
         paddingHorizontal: "2%",
         backgroundColor: colors.light
-    }
+    }, 
+    roundButton1: {
+        width: 80,
+        height: 80,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 10,
+        borderRadius: 100,
+        backgroundColor: colors.green,
+        position: 'absolute',
+        left: "75%",
+        top: "85%"
+      },
+      rotate90: {
+        transform: [{ rotate: '45deg' }],
+        
+      }
     
 })
