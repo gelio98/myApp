@@ -1,11 +1,12 @@
 import React from 'react';
-import { FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import { FlatList, StyleSheet, TouchableOpacity, Animated } from 'react-native';
 import Screen from '../components/Screen'
 import Card from '../components/Card'
 import colors from '../config/colors'
 import AppText from '../components/AppText';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import routes from "../navigation/routes";
+import Header from '../components/Header';
 
 
 const listings = [{
@@ -39,9 +40,21 @@ const listings = [{
 
 ];
 
+const scrollY = new Animated.Value(0)
+const diffClamp = Animated.diffClamp(scrollY,0,45)
+const translateY = diffClamp.interpolate({
+  inputRange:[0,40],
+  outputRange:[0,-40]
+})
+
 function ListingsScreen( {navigation} ) {
     return (
+
+      
+      
        <Screen style={styles.screen}>
+
+       
            <FlatList
            data={listings}
            keyExtractor={listings => listings.id.toString()}
@@ -52,6 +65,7 @@ function ListingsScreen( {navigation} ) {
             image = {item.image}
             />
             }
+            
            />
 
     <TouchableOpacity
