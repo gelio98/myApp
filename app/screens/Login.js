@@ -21,6 +21,7 @@ function Login( {navigation} ) {
     
 
     return (
+        
         <ImageBackground resizeMode="cover" style={styles.background} source={require ("../assets/background.jpg")}>
             <View style={styles.LoginContext}>
                 <Formik
@@ -91,6 +92,8 @@ function Login( {navigation} ) {
          
         </ImageBackground>
     );
+
+    
 
     
 }
