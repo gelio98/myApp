@@ -17,6 +17,7 @@ import Header from "./app/components/Header";
 import {Provider,useSelector} from 'react-redux'
 import ListingsScreen from "./app/screens/ListingsScreen";
 import DrawerNavigator from "./app/navigation/DrawerNavigator";
+import AppNavigator from "./app/navigation/AppNavigator";
 
 //import rootReducer from './reducers'
 //import {configureStore,combineReducers} from 'redux'
@@ -65,8 +66,8 @@ export default function App() {
   return (
 
     <NavigationContainer>
-  
-    <AuthNavigator></AuthNavigator>
+  <AppNavigator> </AppNavigator>
+    
     </NavigationContainer>
   
    

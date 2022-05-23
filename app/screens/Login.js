@@ -81,7 +81,7 @@ function Login( {navigation} ) {
             </View> 
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => navigation.navigate(routes.REGISTER)}> 
+            <TouchableOpacity onPress={() => navigation.navigate("Register")}> 
             <View style={styles.loginButtonRegister}> 
             <Image
                  source={require("../assets/huella.png")} style={styles.imageIconStyle}
