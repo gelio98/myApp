@@ -3,14 +3,14 @@ import { View, StyleSheet, Image, Text} from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import AppText from '../components/AppText'
 
-function Card({ title, subTitle, image, onPress }) {
+function Card({ title, description, image, onPress }) {
     return (
         <TouchableWithoutFeedback onPress={onPress}> 
         <View style={styles.card}>
-            <Image resizeMode="cover" source={ image} style={styles.image}/>
+            <Image resizeMode="cover" source={{ uri: image}} style={styles.image}/>
             <View style={styles.detailsContainer}>
             <AppText style={styles.title} numberOfLines={1} >{title} </AppText>
-            <AppText style={styles.subTitle} numberOfLines={4}>{subTitle} </AppText>
+            <AppText style={styles.subTitle} numberOfLines={4}>{description} </AppText>
             </View>
         </View>
         </TouchableWithoutFeedback>

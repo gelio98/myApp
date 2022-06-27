@@ -18,8 +18,6 @@ const validationSchema = Yup.object().shape({
 
 function Login( {navigation} ) {
 
-    
-
     return (
         
         <ImageBackground resizeMode="cover" style={styles.background} source={require ("../assets/background.jpg")}>
