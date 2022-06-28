@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { StyleSheet } from "react-native";
 import * as Yup from "yup";
-import { auth } from "../api/firebase"
+import { auth, user } from "../api/firebase"
 
 import Screen from "../components/Screen";
 import {
@@ -40,7 +40,7 @@ function RegisterScreen() {
           auth
       .createUserWithEmailAndPassword(values.email, values.password)
       .then(userCredentials => {
-        const user = userCredentials.user;
+         user = userCredentials.user;
         console.log('Registered with:', user.email);
       })
       .catch(error => alert(error.message))

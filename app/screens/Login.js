@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import { ImageBackground, StyleSheet, View, Text, Image, TouchableOpacity, TextInput } from 'react-native';
 import { FacebookSocialButton } from "react-native-social-buttons";
 import AppTextInput from "../components/TextInput"
@@ -7,8 +7,16 @@ import ErrorMessage from '../components/forms/ErrorMessage';
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import AppText from '../components/AppText';
-import AppFormField from '../components/forms/AppFormField';
 import routes from "../navigation/routes";
+import { auth, user } from "../api/firebase"
+import { useNavigation } from '@react-navigation/native';
+
+import {
+    AppForm as Form,
+    AppFormField as AppFormField,
+    AppFormPicker as Picker,
+    SubmitButton,
+  } from "../components/forms";
 
 
 const validationSchema = Yup.object().shape({
@@ -18,13 +26,43 @@ const validationSchema = Yup.object().shape({
 
 function Login( {navigation} ) {
 
+
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged(user => {
+          if (user) {
+            navigation.navigate("Home")
+          }
+        })
+    
+        return unsubscribe
+      }, [])
+
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+    const handleLogin = () => {
+        auth
+          .signInWithEmailAndPassword(email, password)
+          .then(userCredentials => {
+            user = userCredentials.user;
+            console.log('Logged in with:', user.email);
+          })
+          .catch(error => alert(error.message))
+      }
+
     return (
         
         <ImageBackground resizeMode="cover" style={styles.background} source={require ("../assets/background.jpg")}>
             <View style={styles.LoginContext}>
                 <Formik
                     initialValues={{ email: '', password: ''}}
-                    onSubmit={values => console.log(values)}
+                    onSubmit={values =>  auth
+                        .signInWithEmailAndPassword(values.email, values.password)
+                        .then(userCredentials => {
+                          const user = userCredentials.user;
+                          console.log('Logged in with:', user.email);
+                        })
+                        .catch(error => alert(error.message))}
                     validationSchema={validationSchema}
                 >
                     {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
@@ -53,7 +91,7 @@ function Login( {navigation} ) {
 
          
 
-            <AppButton title="Login" color="secondary" onPress={handleSubmit}></AppButton>
+            <SubmitButton title="Login" color="secondary" onPress={handleSubmit}></SubmitButton>
                         </>
                     )}
                  </Formik>

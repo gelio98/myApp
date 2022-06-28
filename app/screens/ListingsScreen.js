@@ -58,6 +58,11 @@ function ListingsScreen( {navigation} ) {
         loadListings()
     }, []);
 
+    React.useEffect(
+        () => navigation.addListener('focus', () => loadListings()),
+        []
+      );
+
     const loadListings =  async () => {
         setLoading(true)
         const response = await listingsApi.getListings();
