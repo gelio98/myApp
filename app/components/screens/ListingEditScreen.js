@@ -14,6 +14,7 @@ import FormImagePicker from "../forms/FormImagePicker";
 import Screen from "../Screen";
 import AppButton from "../AppButton";
 import useLocation from "../../hooks/useLocation";
+import listingsApi from '../../api/listings'
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required().min(1).label("Title"),
@@ -33,6 +34,10 @@ function ListingEditScreen() {
   
   const location = useLocation();
 
+  const  handleSubmit =  listing =>{
+   const result =  listingsApi.addListing({...listing, location})
+  }
+
   return (
     
       <Screen style={styles.container}>
@@ -41,7 +46,7 @@ function ListingEditScreen() {
             title: "",
             price: "",
             description: "",
-            category: null,
+           // category: null,
             images: [],
           }}
           onSubmit={(values) => console.log(location)}
@@ -65,7 +70,7 @@ function ListingEditScreen() {
             numberOfLines={3}
             placeholder="Description"
           />
-          <SubmitButton title="Post" />
+          <AppButton title="Post" onPress={handleSubmit}/>
         </Form>
       </Screen>
   );

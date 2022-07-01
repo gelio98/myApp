@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import { ImageBackground, StyleSheet, View, Text, Image, TouchableOpacity, TextInput } from 'react-native';
 import { FacebookSocialButton } from "react-native-social-buttons";
 import AppTextInput from "../components/TextInput"
@@ -7,8 +7,18 @@ import ErrorMessage from '../components/forms/ErrorMessage';
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import AppText from '../components/AppText';
-import AppFormField from '../components/forms/AppFormField';
 import routes from "../navigation/routes";
+import { auth, user } from "../api/firebase"
+import { useNavigation } from '@react-navigation/native';
+import * as GoogleSignIn from 'expo-google-sign-in';
+
+import {
+    AppForm as Form,
+    AppFormField as AppFormField,
+    AppFormPicker as Picker,
+    SubmitButton,
+  } from "../components/forms";
+import { async } from '@firebase/util';
 
 
 const validationSchema = Yup.object().shape({
@@ -18,7 +28,90 @@ const validationSchema = Yup.object().shape({
 
 function Login( {navigation} ) {
 
+ 
+
+  _syncUserWithStateAsync = async () => {
+    user = GoogleSignIn.getCurrentUser()
+  };
+
+  signOutAsync = async () => {
+    await GoogleSignIn.signOutAsync();
+    user = null
+  };
+
+  signInAsync = async () => {
+    try {
+      await GoogleSignIn.askForPlayServicesAsync();
+      const { type, userGoogle } = await GoogleSignIn.signInAsync();
+      if (type === 'success') {
+        this._syncUserWithStateAsync();
+      }
+    } catch ({ message }) {
+      alert('login: Error:' + message);
+    }
+  };
+
+  onPress = () => {
+    if (user) {
+      this.signOutAsync();
+    } else {
+      this.signInAsync();
+    }
+  };
+
+  googleLoogin = async () => {
+    try {
+      await GoogleSignIn.askForPlayServicesAsync();
+      const { type, userGoogle } = await GoogleSignIn.signInAsync();
+      //user = userGoogle //userGoogle.email
+      if (type === 'success') {
+        let userTemp = GoogleSignIn.getCurrentUser()
+        auth
+      .createUserWithEmailAndPassword(userTemp.email, userTemp.uid)
+      .then(userCredentials => {
+         user = userCredentials.user;
+        console.log('Registered with:', user.email);
+      })
+      .catch(auth
+        .signInWithEmailAndPassword(userTemp.email, userTemp.uid)
+        .then(userCredentials => {
+          user = userCredentials.user;
+          console.log('Logged in with:', user.email);
+        })
+        .catch())
+      }
+    } catch ({ message }) {
+      alert('login: Error:' + message);
+    }
+  }
+        
+  
+
+
+
+
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged(user => {
+          if (user) {
+            navigation.navigate("Home")
+          }
+        })
     
+        return unsubscribe
+      }, [])
+
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+    const handleLogin = () => {
+        auth
+          .signInWithEmailAndPassword(email, password)
+          .then(userCredentials => {
+            user = userCredentials.user;
+            console.log('Logged in with:', user.email);
+          })
+          .catch(error => alert(error.message))
+      }
 
     return (
         
@@ -26,7 +119,13 @@ function Login( {navigation} ) {
             <View style={styles.LoginContext}>
                 <Formik
                     initialValues={{ email: '', password: ''}}
-                    onSubmit={values => console.log(values)}
+                    onSubmit={values =>  auth
+                        .signInWithEmailAndPassword(values.email, values.password)
+                        .then(userCredentials => {
+                          const user = userCredentials.user;
+                          console.log('Logged in with:', user.email);
+                        })
+                        .catch(error => alert(error.message))}
                     validationSchema={validationSchema}
                 >
                     {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
@@ -55,7 +154,7 @@ function Login( {navigation} ) {
 
          
 
-            <AppButton title="Login" color="secondary" onPress={handleSubmit}></AppButton>
+            <SubmitButton title="Login" color="secondary" onPress={handleSubmit}></SubmitButton>
                         </>
                     )}
                  </Formik>
@@ -63,7 +162,7 @@ function Login( {navigation} ) {
             
             </View>
 
-            <TouchableOpacity> 
+            <TouchableOpacity onPress={googleLoogin}> 
             <View style={styles.loginButtonGoogle}> 
             <Image
                  source={require("../assets/google-plus.png")} style={styles.imageIconStyle}
@@ -72,7 +171,7 @@ function Login( {navigation} ) {
             </View> 
             </TouchableOpacity>
 
-            <TouchableOpacity> 
+            <TouchableOpacity > 
             <View style={styles.loginButtonFacebook}> 
             <Image
                  source={require("../assets/facebook.png")} style={styles.imageIconStyle}

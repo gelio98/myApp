@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from 'react'
 import { StyleSheet } from "react-native";
 import * as Yup from "yup";
+import { auth, user } from "../api/firebase"
 
 import Screen from "../components/Screen";
 import {
@@ -17,11 +18,33 @@ const validationSchema = Yup.object().shape({
 });
 
 function RegisterScreen() {
+
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const handleSignUp = () => {
+    auth
+      .createUserWithEmailAndPassword(values.email, values.password)
+      .then(userCredentials => {
+        const user = userCredentials.user;
+        console.log('Registered with:', user.email);
+      })
+      .catch(error => alert(error.message))
+  }
+  
   return (
     <Screen style={styles.container}>
       <Form
         initialValues={{ name: "", email: "", password: "" }}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={values => {
+          auth
+      .createUserWithEmailAndPassword(values.email, values.password)
+      .then(userCredentials => {
+         user = userCredentials.user;
+        console.log('Registered with:', user.email);
+      })
+      .catch(error => alert(error.message))
+        }}
         validationSchema={validationSchema}
       >
         <FormField
@@ -37,6 +60,7 @@ function RegisterScreen() {
           keyboardType="email-address"
           name="email"
           placeholder="Email"
+          
           textContentType="emailAddress"
         />
         <FormField
@@ -46,6 +70,7 @@ function RegisterScreen() {
           name="password"
           placeholder="Password"
           secureTextEntry
+         
           textContentType="password"
         />
         <SubmitButton title="Register" />
