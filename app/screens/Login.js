@@ -10,6 +10,7 @@ import AppText from '../components/AppText';
 import routes from "../navigation/routes";
 import { auth, user } from "../api/firebase"
 import { useNavigation } from '@react-navigation/native';
+import * as GoogleSignIn from 'expo-google-sign-in';
 
 import {
     AppForm as Form,
@@ -17,6 +18,7 @@ import {
     AppFormPicker as Picker,
     SubmitButton,
   } from "../components/forms";
+import { async } from '@firebase/util';
 
 
 const validationSchema = Yup.object().shape({
@@ -25,6 +27,67 @@ const validationSchema = Yup.object().shape({
 }) 
 
 function Login( {navigation} ) {
+
+ 
+
+  _syncUserWithStateAsync = async () => {
+    user = GoogleSignIn.getCurrentUser()
+  };
+
+  signOutAsync = async () => {
+    await GoogleSignIn.signOutAsync();
+    user = null
+  };
+
+  signInAsync = async () => {
+    try {
+      await GoogleSignIn.askForPlayServicesAsync();
+      const { type, userGoogle } = await GoogleSignIn.signInAsync();
+      if (type === 'success') {
+        this._syncUserWithStateAsync();
+      }
+    } catch ({ message }) {
+      alert('login: Error:' + message);
+    }
+  };
+
+  onPress = () => {
+    if (user) {
+      this.signOutAsync();
+    } else {
+      this.signInAsync();
+    }
+  };
+
+  googleLoogin = async () => {
+    try {
+      await GoogleSignIn.askForPlayServicesAsync();
+      const { type, userGoogle } = await GoogleSignIn.signInAsync();
+      //user = userGoogle //userGoogle.email
+      if (type === 'success') {
+        let userTemp = GoogleSignIn.getCurrentUser()
+        auth
+      .createUserWithEmailAndPassword(userTemp.email, userTemp.uid)
+      .then(userCredentials => {
+         user = userCredentials.user;
+        console.log('Registered with:', user.email);
+      })
+      .catch(auth
+        .signInWithEmailAndPassword(userTemp.email, userTemp.uid)
+        .then(userCredentials => {
+          user = userCredentials.user;
+          console.log('Logged in with:', user.email);
+        })
+        .catch())
+      }
+    } catch ({ message }) {
+      alert('login: Error:' + message);
+    }
+  }
+        
+  
+
+
 
 
     useEffect(() => {
@@ -99,7 +162,7 @@ function Login( {navigation} ) {
             
             </View>
 
-            <TouchableOpacity> 
+            <TouchableOpacity onPress={googleLoogin}> 
             <View style={styles.loginButtonGoogle}> 
             <Image
                  source={require("../assets/google-plus.png")} style={styles.imageIconStyle}
@@ -108,7 +171,7 @@ function Login( {navigation} ) {
             </View> 
             </TouchableOpacity>
 
-            <TouchableOpacity> 
+            <TouchableOpacity > 
             <View style={styles.loginButtonFacebook}> 
             <Image
                  source={require("../assets/facebook.png")} style={styles.imageIconStyle}

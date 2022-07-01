@@ -11,6 +11,7 @@ import ImageInput from "./app/components/ImageInput";
 import ImageInputList from "./app/components/ImageInputList";
 import { NavigationContainer } from "@react-navigation/native";
 import AuthNavigator from "./app/navigation/AuthNavigator";
+import { ImageBackground, StyleSheet, View, Text, Image, TouchableOpacity, TextInput } from 'react-native';
 import { Component } from "react";
 import { Animated } from 'react-native';
 import Header from "./app/components/Header";
@@ -18,6 +19,7 @@ import {Provider,useSelector} from 'react-redux'
 import ListingsScreen from "./app/screens/ListingsScreen";
 import DrawerNavigator from "./app/navigation/DrawerNavigator";
 import AppNavigator from "./app/navigation/AppNavigator";
+import AuthScreen from "./prueba";
 
 //import rootReducer from './reducers'
 //import {configureStore,combineReducers} from 'redux'
@@ -65,11 +67,19 @@ export default function App() {
   
   return (
 
+    
     <NavigationContainer>
   <AppNavigator> </AppNavigator>
     
     </NavigationContainer>
   
+
+    /*
+ <View style={styles.container}>
+ <AuthScreen></AuthScreen>
+ </View>
+ 
+   */
    
     
     
@@ -82,3 +92,41 @@ export default function App() {
   */
   );
 }
+
+var styles = StyleSheet.create({
+
+  container: {
+      flex: 1,
+      flexDirection: 'column',
+      backgroundColor: 'red',
+      justifyContent: 'center',
+      alignItems: 'center',
+  },
+
+  topBox: {
+      flex: 1,
+      flexDirection: 'row',
+      backgroundColor: 'lightgray',
+      justifyContent: 'center',
+      alignItems: 'center',
+  },
+  headline: {
+      fontWeight: 'bold',
+      fontSize: 18,
+  marginTop: 0,
+      width: 200,
+      height: 80,
+  backgroundColor: 'yellow',
+      justifyContent: 'center',
+      alignItems: 'center',
+  },
+
+otherContainer: {
+      flex: 4,
+      justifyContent: 'center',
+      alignItems: 'center',
+  backgroundColor: 'green',
+  },
+
+
+});

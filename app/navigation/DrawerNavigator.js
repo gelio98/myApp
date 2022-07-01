@@ -8,9 +8,7 @@ import ListingsScreen from "../screens/ListingsScreen";
 import LoginScreen from "../screens/Login";
 import { auth, user } from "../api/firebase"
 import { Button } from 'react-native';
-
-
-
+import * as GoogleSignIn from 'expo-google-sign-in';
 
 
 import {
@@ -49,6 +47,17 @@ function DrawerNavigator({navigation}){
     
     useEffect(() => {
       const unsubscribe = auth.onAuthStateChanged(user => {
+        if (user) {
+         setLogged(true)
+        }
+      })
+    
+      return unsubscribe
+    }, [])
+
+    useEffect(() => {
+      const unsubscribe = GoogleSignIn.isConnectedAsync(user => {
+
         if (user) {
          setLogged(true)
         }
