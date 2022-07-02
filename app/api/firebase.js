@@ -47,6 +47,8 @@ export const addIncidencia = (title, description, imgURL, userEmail) => {
   //  categoryID,
    // incidenceType,
     createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
+    id: firebase.firestore.Timestamp.fromDate(new Date())
+  
   })
 }
 
@@ -110,4 +112,17 @@ export const getUserEmail = () => {
    }
   return user.email
 }
+
+
+export const fetchLatestIncidencias = () => {
+  db.collection("incidencia").onSnapshot((querySnapshot) => {
+   
+   
+    querySnapshot.docs.forEach((doc) => {
+        console.log(doc.data())
+    })
+      })
+    }
+
+
 export { db, auth, user};

@@ -11,6 +11,7 @@ import Header from '../components/Header';
 import listingsApi from '../api/listings';
 import { object } from 'yup/lib/locale';
 import AppButton from '../components/AppButton';
+import { fetchLatestIncidencias, db } from "../api/firebase"
 
 
 
@@ -65,23 +66,40 @@ function ListingsScreen( {navigation} ) {
 
     const loadListings =  async () => {
         setLoading(true)
-        const response = await listingsApi.getListings();
-        setLoading(false)
-        if (!response.ok){
-           return setError(true)
+       // const response = await listingsApi.getListings();
+       //const response = fetchLatestIncidencias();
+
+       db.collection("incidencia").onSnapshot((querySnapshot) => {
+   
+        const listings = [];
+        querySnapshot.docs.forEach((doc) => {
            
-        }
+           listings.push(doc.data())
+        })
+
+        console.log(listings)
+        setListings(listings);
+          })
+
+        setLoading(false)
+       
 
         setError(false)
-        setListings(listingConst);
-        let item =  Object.keys(response.data).map(  function (key) {
-          return response.data[key]
+        setListings(listings);
+        console.log("voy a enseñar completo")
+        console.log(listings)
+
+        
+        let item =  Object.keys(listings).map( function (key) {
+          return listings[key]
        }
            
         )
         console.log("show item")
         console.log(item)
+
         setListings(item);
+        
     
     }
 
@@ -107,7 +125,7 @@ function ListingsScreen( {navigation} ) {
             <Card
             title = {item.title}
             description = {item.description}
-            //image = {item.images[0].url}
+            image = {item.imgURL}
             onPress={() => navigation.navigate("ListingDetails", item )}
             />
             }
