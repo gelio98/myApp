@@ -3,6 +3,8 @@ import { StyleSheet } from "react-native";
 import * as Yup from "yup";
 import CategoryPickerItem from "../CategoryPickerItem";
 
+import MapView, {Marker } from 'react-native-maps';
+
 
 import {
   AppForm as Form,
@@ -15,6 +17,7 @@ import Screen from "../Screen";
 import AppButton from "../AppButton";
 import useLocation from "../../hooks/useLocation";
 import listingsApi from '../../api/listings'
+import { View } from "react-native-web";
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required( "Por favor, ponga un título").label("Title"),
@@ -74,10 +77,14 @@ function ListingEditScreen() {
             placeholder="Descripcion"
           />
 
+
+
+
           <SubmitButton title="Crear incidencia" />
         
         </Form>
       </Screen>
+      
   );
 }
 
