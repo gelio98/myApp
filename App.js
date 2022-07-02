@@ -67,6 +67,7 @@ export default function App() {
   
 
     
+    
     <NavigationContainer>
   <AppNavigator> </AppNavigator>
     
@@ -133,8 +134,9 @@ otherContainer: {
     justifyContent: 'center',
   },
   map: {
-    width: "50%",
-    height: "50%",
+    width: "100%",
+    height: "100%",
+   
   },
 
 

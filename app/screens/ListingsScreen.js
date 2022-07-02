@@ -69,7 +69,7 @@ function ListingsScreen( {navigation} ) {
        // const response = await listingsApi.getListings();
        //const response = fetchLatestIncidencias();
 
-       db.collection("incidencia").onSnapshot((querySnapshot) => {
+       db.collection("incidencia").orderBy("createdAt", "desc").onSnapshot((querySnapshot) => {
    
         const listings = [];
         querySnapshot.docs.forEach((doc) => {

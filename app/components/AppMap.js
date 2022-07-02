@@ -6,7 +6,7 @@ import { Animated, Dimensions } from 'react-native';
 import MapView, { Callout, Circle, Marker } from "react-native-maps"
 
 
-export default function AppMap() {
+export default function AppMap(props) {
 
     const [ pin, setPin ] = React.useState({
           latitude: 37.78825,
@@ -22,7 +22,8 @@ export default function AppMap() {
     
     
     return (
-  <View style={styles.containermap}>
+
+        
         <MapView
                   style={styles.map}
                   initialRegion={{
@@ -54,22 +55,22 @@ export default function AppMap() {
                   </Marker>
                   <Circle center={pin} radius={1000} />
               </MapView>
-          </View>
-     
+        
   
     );
   }
 
   var styles = StyleSheet.create({
     containermap: {
-      flex: 1,
+     
       backgroundColor: '#fff',
       alignItems: 'center',
       justifyContent: 'center',
     },
     map: {
-      width: "50%",
-      height: "50%",
+      width: "100%",
+      height: "100%",
+  
     },
   
   
