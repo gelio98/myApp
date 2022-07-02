@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import CategoryPickerItem from "../CategoryPickerItem";
 
 import MapView, {Marker } from 'react-native-maps';
+import { addIncidencia,  } from "../../api/firebase"
 
 
 import {
@@ -18,6 +19,7 @@ import AppButton from "../AppButton";
 import useLocation from "../../hooks/useLocation";
 import listingsApi from '../../api/listings'
 import { View } from "react-native-web";
+
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required( "Por favor, ponga un título").label("Title"),
@@ -36,6 +38,18 @@ function ListingEditScreen() {
   
   const location = useLocation();
 
+  const saveNewUser = async (values) => {
+    try {
+      await db.collection("users").add({
+       name: values.title,
+       email: values.description,
+     
+     });
+   } catch (error) {
+     console.log(error)
+   }
+  };
+
   /*
   const  handleSubmit =  listing =>{
    const result =  listingsApi.addListing({...listing, location})
@@ -50,10 +64,18 @@ function ListingEditScreen() {
             price: "",
             description: "",
             //category: null,
-            images: [],
+            images: "",
           }}
           onSubmit={values => {console.log(values)
-          console.log(location)}}
+          console.log(location)
+          console.log(values.description, values.title)
+         addIncidencia(values.title, values.description)
+
+
+        
+        }
+          
+        }
           validationSchema={validationSchema}
         >
 

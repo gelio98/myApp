@@ -64,17 +64,15 @@ export default function App() {
   
   return (
 
-   <AppMap></AppMap>
+  
 
-
-    /*
     
     <NavigationContainer>
   <AppNavigator> </AppNavigator>
     
     </NavigationContainer>
   
-*/
+
     /*
  <View style={styles.container}>
  <AuthScreen></AuthScreen>

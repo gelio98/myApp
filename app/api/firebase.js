@@ -27,8 +27,27 @@ if (firebase.apps.length === 0) {
   app = firebase.app();
 }
 
-const db = app.firestore();
+const db = firebase.firestore();
 const auth = firebase.auth();
 var user = firebase.auth().currentUser;
+
+export const addIncidencia = (title, description, latitude, longitude, categoryID, incidenceType) => {
+  console.log (title, description)
+  return db.collection("incidencia").add({
+    title,
+    description,
+    latitude,
+    longitude,
+    categoryID,
+    incidenceType,
+    createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
+  })
+}
+
+export const uploadImage = (file) => {
+  const ref = firebase.storage().ref(`images/${file.name}`)
+  const task = ref.put(file)
+  return task
+}
 
 export { db, auth, user};
