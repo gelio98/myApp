@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import CategoryPickerItem from "../CategoryPickerItem";
 
 import MapView, {Marker } from 'react-native-maps';
-import { addIncidencia,  } from "../../api/firebase"
+import { addIncidencia, uploadImage, uploadImageToBucket  } from "../../api/firebase"
 
 
 import {
@@ -38,17 +38,8 @@ function ListingEditScreen() {
   
   const location = useLocation();
 
-  const saveNewUser = async (values) => {
-    try {
-      await db.collection("users").add({
-       name: values.title,
-       email: values.description,
-     
-     });
-   } catch (error) {
-     console.log(error)
-   }
-  };
+
+ 
 
   /*
   const  handleSubmit =  listing =>{
@@ -64,14 +55,14 @@ function ListingEditScreen() {
             price: "",
             description: "",
             //category: null,
-            images: "",
+            images: [],
           }}
-          onSubmit={values => {console.log(values)
+          onSubmit={async (values) => {console.log(values)
           console.log(location)
-          console.log(values.description, values.title)
-         addIncidencia(values.title, values.description)
-
-
+          console.log(values.description, values.title, values.images[0])
+        // addIncidencia(values.title, values.description)
+        let imgURL = await uploadImageToBucket (values.images[0])
+        addIncidencia(values.title, values.description, imgURL)
         
         }
           

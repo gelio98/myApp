@@ -2,6 +2,10 @@
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
+import 'firebase/compat/storage';
+
+
+import uuid from 'uuid';
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -31,23 +35,66 @@ const db = firebase.firestore();
 const auth = firebase.auth();
 var user = firebase.auth().currentUser;
 
-export const addIncidencia = (title, description, latitude, longitude, categoryID, incidenceType) => {
+export const addIncidencia = (title, description, imgURL) => {
   console.log (title, description)
   return db.collection("incidencia").add({
     title,
     description,
-    latitude,
-    longitude,
-    categoryID,
-    incidenceType,
+    imgURL,
+    
+  //  categoryID,
+   // incidenceType,
     createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
   })
 }
 
 export const uploadImage = (file) => {
   const ref = firebase.storage().ref(`images/${file.name}`)
+
   const task = ref.put(file)
   return task
 }
+
+const getPictureBlob = (imageUri) => {
+  // https://github.com/expo/expo/issues/2402#issuecomment-443726662
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+      resolve(xhr.response);
+    };
+    xhr.onerror = function (e) {
+      console.log(e);
+      reject(new TypeError('Network request failed'));
+    };
+    xhr.responseType = 'blob';
+    xhr.open('GET', imageUri, true);
+    xhr.send(null);
+  });
+};
+
+
+
+export const uploadImageToBucket = async (imageUri) => {
+  let blob;
+  try {
+    
+    blob = await getPictureBlob(imageUri);
+    console.log("despues de pictureblob")
+    console.log(blob)
+    const ref = await firebase.storage().ref("images/" + imageUri);
+    
+    console.log("despues de await")
+  
+    const snapshot = await ref.put(blob);
+
+    console.log(await snapshot.ref.getDownloadURL())
+    return await snapshot.ref.getDownloadURL();
+  } catch (e) {
+    alert(e.message);
+  } finally {
+    blob.close();
+   
+  }
+};
 
 export { db, auth, user};
