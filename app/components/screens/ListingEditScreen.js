@@ -17,11 +17,10 @@ import useLocation from "../../hooks/useLocation";
 import listingsApi from '../../api/listings'
 
 const validationSchema = Yup.object().shape({
-  title: Yup.string().required().min(1).label("Title"),
-  price: Yup.number().required().min(1).max(10000).label("Price"),
+  title: Yup.string().required( "Por favor, ponga un título").label("Title"),
   description: Yup.string().label("Description"),
-  category: Yup.object().required().nullable().label("Category"),
-  images: Yup.array().min(1, "Please, select at least one image.").max(4, "Please, select at maximun four images").label("Images")
+  category: Yup.object().required("Añada una categoría.").label("Category"),
+  images: Yup.array().min(1, "Por favor, selecciona al menos una imagen.").max(4, "Por favor, selecciona como máximo 4 imagenes.").label("Images"),
 });
 
 const categories = [
@@ -34,10 +33,11 @@ function ListingEditScreen() {
   
   const location = useLocation();
 
+  /*
   const  handleSubmit =  listing =>{
    const result =  listingsApi.addListing({...listing, location})
   }
-
+*/
   return (
     
       <Screen style={styles.container}>
@@ -46,21 +46,24 @@ function ListingEditScreen() {
             title: "",
             price: "",
             description: "",
-           // category: null,
+            //category: null,
             images: [],
           }}
-          onSubmit={(values) => console.log(location)}
+          onSubmit={values => {console.log(values)
+          console.log(location)}}
           validationSchema={validationSchema}
         >
+
+          
           <FormImagePicker name="images" />
-          <FormField maxLength={255} name="title" placeholder="Title" />
+          <FormField maxLength={255} name="title" placeholder="Título" />
           
           <Picker
             items={categories}
             name="category"
             numberOfColumns={3}
             PickerItemComponent={CategoryPickerItem}
-            placeholder="Category"
+            placeholder="Categoria"
             
           />
           <FormField
@@ -68,9 +71,11 @@ function ListingEditScreen() {
             multiline
             name="description"
             numberOfLines={3}
-            placeholder="Description"
+            placeholder="Descripcion"
           />
-          <AppButton title="Post" onPress={handleSubmit}/>
+
+          <SubmitButton title="Crear incidencia" />
+        
         </Form>
       </Screen>
   );
