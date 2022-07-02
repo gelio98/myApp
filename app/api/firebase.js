@@ -1,4 +1,5 @@
 // Import the functions you need from the SDKs you need
+import { getCurrentUser } from 'expo-google-sign-in';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
@@ -35,12 +36,13 @@ const db = firebase.firestore();
 const auth = firebase.auth();
 var user = firebase.auth().currentUser;
 
-export const addIncidencia = (title, description, imgURL) => {
+export const addIncidencia = (title, description, imgURL, userEmail) => {
   console.log (title, description)
   return db.collection("incidencia").add({
     title,
     description,
     imgURL,
+    userEmail,
     
   //  categoryID,
    // incidenceType,
@@ -97,4 +99,15 @@ export const uploadImageToBucket = async (imageUri) => {
   }
 };
 
+
+
+export const getUserEmail = () => {
+
+  console.log ("Voy a comprobar el usuario")
+
+  if (user) {
+    console.log('User email: ', user.email);
+   }
+  return user.email
+}
 export { db, auth, user};

@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import CategoryPickerItem from "../CategoryPickerItem";
 
 import MapView, {Marker } from 'react-native-maps';
-import { addIncidencia, uploadImage, uploadImageToBucket  } from "../../api/firebase"
+import { addIncidencia, uploadImage, uploadImageToBucket, getUserEmail, auth } from "../../api/firebase"
 
 
 import {
@@ -19,8 +19,7 @@ import AppButton from "../AppButton";
 import useLocation from "../../hooks/useLocation";
 import listingsApi from '../../api/listings'
 import { View } from "react-native-web";
-
-
+import { user, } from "../../api/firebase"
 const validationSchema = Yup.object().shape({
   title: Yup.string().required( "Por favor, ponga un título").label("Title"),
   description: Yup.string().label("Description"),
@@ -35,6 +34,18 @@ const categories = [
 ];
 
 function ListingEditScreen() {
+
+  const [emailUser, setEmailUser] = useState("")
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      if (user) {
+        setEmailUser(user.email)
+      }
+    })
+  
+    return unsubscribe
+  }, [])
   
   const location = useLocation();
 
@@ -57,12 +68,12 @@ function ListingEditScreen() {
             //category: null,
             images: [],
           }}
-          onSubmit={async (values) => {console.log(values)
-          console.log(location)
-          console.log(values.description, values.title, values.images[0])
+          onSubmit={async (values) => {
+           
+           
         // addIncidencia(values.title, values.description)
         let imgURL = await uploadImageToBucket (values.images[0])
-        addIncidencia(values.title, values.description, imgURL)
+        addIncidencia(values.title, values.description, imgURL, emailUser)
         
         }
           
