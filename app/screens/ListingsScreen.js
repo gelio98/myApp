@@ -12,6 +12,9 @@ import listingsApi from '../api/listings';
 import { object } from 'yup/lib/locale';
 import AppButton from '../components/AppButton';
 import { fetchLatestIncidencias, db } from "../api/firebase"
+console.disableYellowBox = true;
+
+
 
 
 
@@ -108,13 +111,15 @@ function ListingsScreen( {navigation} ) {
       
       
        <Screen style={styles.screen}>
-
+             <AppText style={styles.text}> Animales perdidos </AppText>
            { error && (
                <>
                 <AppText> Couldnt get the list</AppText>
                 <AppButton title="Retry" onPress={loadListings}> </AppButton>
                </>
            )}
+
+       
 
         <ActivityIndicator animating={loading} size="large" />
        
@@ -152,7 +157,13 @@ const styles = StyleSheet.create({
     screen: {
         paddingHorizontal: "2%",
         backgroundColor: colors.light
-    }, 
+    },
+    text: {
+        textAlign: "center",
+        marginTop: 20,
+        fontWeight: "bold",
+        
+    },
     roundButton1: {
         width: 80,
         height: 80,

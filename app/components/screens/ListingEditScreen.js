@@ -82,7 +82,7 @@ function ListingEditScreen({navigation}) {
         let imgURL = await uploadImageToBucket (values.images[0])
        
        await addIncidencia(values.title, values.description, imgURL, emailUser, values.category, values.incidencia)
-       navigation.navigate("Home")
+      navigation.navigate("Home")
         }
           
         }

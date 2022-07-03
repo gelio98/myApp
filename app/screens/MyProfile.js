@@ -12,6 +12,9 @@ import listingsApi from '../api/listings';
 import { object } from 'yup/lib/locale';
 import AppButton from '../components/AppButton';
 import { auth, db, deleteByID } from "../api/firebase"
+import { LogBox } from 'react-native';
+console.disableYellowBox = true;
+
 
 
 
@@ -55,9 +58,12 @@ function MyProfile( {navigation} ) {
     const [error , setError] = useState();
     const [loading , setLoading] = useState();
 
-    const [emailUser, setEmailUser] = useState("")
+    const [userEmail, setEmailUser] = useState("")
 
+    
     useEffect(
+        
+        
         () => navigation.addListener('focus', () => loadListings()),
         []
       );
@@ -85,7 +91,8 @@ function MyProfile( {navigation} ) {
        // const response = await listingsApi.getListings();
        //const response = fetchLatestIncidencias();
        //db.collection("incidencia").where('incidenceType.value', '==', 2).onSnapshot((querySnapshot)
-       db.collection("incidencia").onSnapshot((querySnapshot) => {
+       console.log("este es el correo" + userEmail + "correo")
+       db.collection("incidencia").where('userEmail', '==', userEmail).orderBy("createdAt", "desc").onSnapshot((querySnapshot) => {
    
        
         querySnapshot.docs.forEach((doc) => {
@@ -123,7 +130,7 @@ function MyProfile( {navigation} ) {
       
       
        <Screen style={styles.screen}>
-
+        <AppText style={styles.text}> Mis incidencias </AppText>
            { error && (
                <>
                 <AppText> Couldnt get the list</AppText>
@@ -131,7 +138,7 @@ function MyProfile( {navigation} ) {
                </>
            )}
 
-        <AppText> Mis Posts</AppText>
+  
         <ActivityIndicator animating={loading} size="large" />
        
            <FlatList
@@ -175,6 +182,12 @@ const styles = StyleSheet.create({
         paddingHorizontal: "2%",
         backgroundColor: colors.light
     }, 
+    text: {
+        textAlign: "center",
+        marginTop: 20,
+        fontWeight: "bold",
+        
+    },
     roundButton1: {
         width: 80,
         height: 80,

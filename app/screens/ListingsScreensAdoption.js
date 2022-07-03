@@ -12,6 +12,9 @@ import listingsApi from '../api/listings';
 import { object } from 'yup/lib/locale';
 import AppButton from '../components/AppButton';
 import { fetchLatestIncidencias, db } from "../api/firebase"
+console.disableYellowBox = true;
+
+
 
 
 
@@ -69,7 +72,7 @@ function ListingsScreenAdoption( {navigation} ) {
        // const response = await listingsApi.getListings();
        //const response = fetchLatestIncidencias();
 
-       db.collection("incidencia").where('incidenceType.value', '==', 2).onSnapshot((querySnapshot) => {
+       db.collection("incidencia").where('incidenceType.value', '==', 2).orderBy("createdAt", "desc").onSnapshot((querySnapshot) => {
    
         const listingsaux = [];
         querySnapshot.docs.forEach((doc) => {
@@ -105,6 +108,7 @@ function ListingsScreenAdoption( {navigation} ) {
       
       
        <Screen style={styles.screen}>
+         <AppText style={styles.text}> Animales en adopción </AppText>
 
            { error && (
                <>
@@ -150,6 +154,12 @@ const styles = StyleSheet.create({
         paddingHorizontal: "2%",
         backgroundColor: colors.light
     }, 
+    text: {
+        textAlign: "center",
+        marginTop: 20,
+        fontWeight: "bold",
+        
+    },
     roundButton1: {
         width: 80,
         height: 80,

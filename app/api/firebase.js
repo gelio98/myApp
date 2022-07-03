@@ -47,8 +47,7 @@ export const addIncidencia = (title, description, imgURL, userEmail, categoryID,
     incidenceType,
     latitude: "38.375868",
     longitude: "0.491327",
-  //  categoryID,
-   // incidenceType,
+    encontrado: false,
     createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
     id: firebase.firestore.Timestamp.fromDate(new Date())
   
