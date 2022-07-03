@@ -36,14 +36,17 @@ const db = firebase.firestore();
 const auth = firebase.auth();
 var user = firebase.auth().currentUser;
 
-export const addIncidencia = (title, description, imgURL, userEmail) => {
+export const addIncidencia = (title, description, imgURL, userEmail, categoryID, incidenceType) => {
   console.log (title, description)
   return db.collection("incidencia").add({
     title,
     description,
     imgURL,
     userEmail,
-    
+    categoryID,
+    incidenceType,
+    latitude: "38.375868",
+    longitude: "0.491327",
   //  categoryID,
    // incidenceType,
     createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
@@ -123,6 +126,15 @@ export const fetchLatestIncidencias = () => {
     })
       })
     }
+
+
+
+    export const deleteByID = async (id) => {
+     
+        const snapshot = await db.collection("incidencia").limit(1).where('id', '==', id).get();
+        const doc = snapshot.docs[0];
+        doc.ref.delete();
+    };
 
 
 export { db, auth, user};

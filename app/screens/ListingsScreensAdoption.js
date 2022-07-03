@@ -69,25 +69,23 @@ function ListingsScreenAdoption( {navigation} ) {
        // const response = await listingsApi.getListings();
        //const response = fetchLatestIncidencias();
 
-       db.collection("incidencia").where('category', '==', true).onSnapshot((querySnapshot) => {
+       db.collection("incidencia").where('incidenceType.value', '==', 2).onSnapshot((querySnapshot) => {
    
-        const listings = [];
+        const listingsaux = [];
         querySnapshot.docs.forEach((doc) => {
            console.log(doc.id)
-           listings.push(doc.data())
+           listingsaux.push(doc.data())
         })
 
-        console.log(listings)
-        setListings(listings);
+        console.log(listingsaux)
+        setListings(listingsaux);
           })
 
         setLoading(false)
        
 
         setError(false)
-        setListings(listings);
-        console.log("voy a enseñar completo")
-        console.log(listings)
+       
 
         
         let item =  Object.keys(listings).map( function (key) {
@@ -97,16 +95,6 @@ function ListingsScreenAdoption( {navigation} ) {
         )
         console.log("show item")
         console.log(item)
-        
-
-        //how to delete
-        const snapshot = await db.collection("incidencia").limit(1).where('category', '==', false).get();
-        const doc = snapshot.docs[0];
-        doc.ref.delete();
-
-  console.log(doc.id);
-  return doc.id;
-
         setListings(item);
         
     

@@ -9,14 +9,14 @@ import MapView, { Callout, Circle, Marker } from "react-native-maps"
 export default function AppMap(props) {
 
     const [ pin, setPin ] = React.useState({
-          latitude: 37.78825,
-          longitude: -122.4324
+          latitude: 38.375868,
+          longitude: -0.491327
       })
       const [ region, setRegion ] = React.useState({
-          latitude: 37.78825,
-          longitude: -122.4324,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421
+          latitude: 38.375868,
+          longitude: -0.491327,
+          latitudeDelta: 0.122,
+          longitudeDelta: 0.0921
       })
   
     
@@ -27,10 +27,10 @@ export default function AppMap(props) {
         <MapView
                   style={styles.map}
                   initialRegion={{
-                      latitude: 37.78825,
-                      longitude: -122.4324,
-                      latitudeDelta: 0.0922,
-                      longitudeDelta: 0.0421
+                      latitude: 38.375868,
+                      longitude: -0.491327,
+                      latitudeDelta: 0.122,
+                      longitudeDelta: 0.0921
                   }}
                   provider="google"
               >

@@ -20,6 +20,7 @@ import {
 import { exp, useAnimatedGestureHandler } from 'react-native-reanimated';
 import { render } from 'react-dom';
 import ListingsScreenAdoption from '../screens/ListingsScreensAdoption';
+import MyProfile from '../screens/MyProfile';
 
 
 
@@ -83,6 +84,7 @@ function DrawerNavigator({navigation}){
       <Drawer.Navigator drawerContent={props => <CustomDrawerContent {...props} />}>
          <Drawer.Screen name="Home" component={ListingsScreen} options={{ headerShown: false}}  />
          <Drawer.Screen name="Adopciones" component={ListingsScreenAdoption} options={{ headerShown: false}}  />
+         {logged === true ? (<Drawer.Screen name="Mi perfil" component={MyProfile} options={{ headerShown: false}} />) : (<></> )}
        {logged === false ? (<Drawer.Screen name="Login" component={LoginScreen} options={{ headerShown: false}} />) : (<></> )}
       </Drawer.Navigator>
     

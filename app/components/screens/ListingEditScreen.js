@@ -28,9 +28,15 @@ const validationSchema = Yup.object().shape({
 });
 
 const categories = [
-  { label: "Dog", value: 1 },
-  { label: "Cat", value: 2 },
-  { label: "Others", value: 3 },
+  { label: "Perro", value: 1, icon: "dog", backgroundColor: "#4ecdc4" },
+  { label: "Gato", value: 2, icon: "cat", backgroundColor: "#4ecdc4" },
+  { label: "Otros", value: 3, icon: "help", backgroundColor: "#4ecdc4"},
+];
+
+const incidencias = [
+  { label: "Perdido", value: 1, icon: "emoticon-sad", backgroundColor: "#4ecdc4" },
+  { label: "Adopción", value: 2, icon: "heart", backgroundColor: "#4ecdc4" },
+ 
 ];
 
 function ListingEditScreen() {
@@ -65,15 +71,17 @@ function ListingEditScreen() {
             title: "",
             price: "",
             description: "",
-            //category: null,
+            category: "",
+            incidencia: "",
             images: [],
           }}
           onSubmit={async (values) => {
            
-           
+            console.log("Esta es la categoria" + values.category)
         // addIncidencia(values.title, values.description)
         let imgURL = await uploadImageToBucket (values.images[0])
-        addIncidencia(values.title, values.description, imgURL, emailUser)
+       
+       await addIncidencia(values.title, values.description, imgURL, emailUser, values.category, values.incidencia)
         
         }
           
@@ -84,15 +92,6 @@ function ListingEditScreen() {
           
           <FormImagePicker name="images" />
           <FormField maxLength={255} name="title" placeholder="Título" />
-          
-          <Picker
-            items={categories}
-            name="category"
-            numberOfColumns={3}
-            PickerItemComponent={CategoryPickerItem}
-            placeholder="Categoria"
-            
-          />
           <FormField
             maxLength={255}
             multiline
@@ -100,9 +99,25 @@ function ListingEditScreen() {
             numberOfLines={3}
             placeholder="Descripcion"
           />
+          
+          <Picker
+            items={categories}
+            name="category"
+            numberOfColumns={3}
+            PickerItemComponent={CategoryPickerItem}
+            placeholder="Categoria"
+          
+          />
 
-
-
+            <Picker
+            items={incidencias}
+            name="incidencia"
+            numberOfColumns={2}
+            PickerItemComponent={CategoryPickerItem}
+            placeholder="Tipo de incidencia"
+            
+            
+          />
 
           <SubmitButton title="Crear incidencia" />
         

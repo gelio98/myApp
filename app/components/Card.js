@@ -3,9 +3,9 @@ import { View, StyleSheet, Image, Text} from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import AppText from '../components/AppText'
 
-function Card({ title, description, image, onPress }) {
+function Card({ title, description, image, onPress, onLongPress }) {
     return (
-        <TouchableWithoutFeedback onPress={onPress}> 
+        <TouchableWithoutFeedback onPress={onPress} onLongPress={onLongPress}> 
         <View style={styles.card}>
             <Image resizeMode="cover" source={{ uri: image}} style={styles.image}/>
             <View style={styles.detailsContainer}>
