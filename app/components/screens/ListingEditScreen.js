@@ -39,7 +39,7 @@ const incidencias = [
  
 ];
 
-function ListingEditScreen() {
+function ListingEditScreen({navigation}) {
 
   const [emailUser, setEmailUser] = useState("")
 
@@ -82,7 +82,7 @@ function ListingEditScreen() {
         let imgURL = await uploadImageToBucket (values.images[0])
        
        await addIncidencia(values.title, values.description, imgURL, emailUser, values.category, values.incidencia)
-        
+       navigation.navigate("Home")
         }
           
         }
