@@ -9,3 +9,6 @@ function AppText({ children, style, ...otherProps }) {
 
 export default AppText;
 
+
+
+

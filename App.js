@@ -11,12 +11,18 @@ import ImageInput from "./app/components/ImageInput";
 import ImageInputList from "./app/components/ImageInputList";
 import { NavigationContainer } from "@react-navigation/native";
 import AuthNavigator from "./app/navigation/AuthNavigator";
+import { ImageBackground, StyleSheet, View, Text, Image, TouchableOpacity, TextInput } from 'react-native';
 import { Component } from "react";
-import { Animated } from 'react-native';
+import { Animated, Dimensions } from 'react-native';
 import Header from "./app/components/Header";
 import {Provider,useSelector} from 'react-redux'
 import ListingsScreen from "./app/screens/ListingsScreen";
 import DrawerNavigator from "./app/navigation/DrawerNavigator";
+import AppNavigator from "./app/navigation/AppNavigator";
+import AuthScreen from "./prueba";
+import MapView, { Callout, Circle, Marker } from "react-native-maps"
+import AppMap from "./app/components/AppMap";
+
 
 //import rootReducer from './reducers'
 //import {configureStore,combineReducers} from 'redux'
@@ -53,22 +59,27 @@ class MyAwesomeComponent extends Component {
 
 
 export default function App() {
-  const [imageUris, setImageUris] = useState([]);
-  const handleAdd = uri => {
-    setImageUris([...imageUris, uri])
-  }
 
-  const handleRemove =  uri => {
-    setImageUris(imageUris.filter(imageUri => imageUri !== uri))
-  }
+  
   
   return (
 
-    <NavigationContainer>
   
-    <AuthNavigator></AuthNavigator>
+
+    
+    
+    <NavigationContainer>
+  <AppNavigator> </AppNavigator>
+    
     </NavigationContainer>
   
+
+    /*
+ <View style={styles.container}>
+ <AuthScreen></AuthScreen>
+ </View>
+ 
+   */
    
     
     
@@ -81,3 +92,52 @@ export default function App() {
   */
   );
 }
+
+var styles = StyleSheet.create({
+
+  container: {
+      flex: 1,
+      flexDirection: 'column',
+      backgroundColor: 'red',
+      justifyContent: 'center',
+      alignItems: 'center',
+  },
+
+  topBox: {
+      flex: 1,
+      flexDirection: 'row',
+      backgroundColor: 'lightgray',
+      justifyContent: 'center',
+      alignItems: 'center',
+  },
+  headline: {
+      fontWeight: 'bold',
+      fontSize: 18,
+  marginTop: 0,
+      width: 200,
+      height: 80,
+  backgroundColor: 'yellow',
+      justifyContent: 'center',
+      alignItems: 'center',
+  },
+
+otherContainer: {
+      flex: 4,
+      justifyContent: 'center',
+      alignItems: 'center',
+  backgroundColor: 'green',
+  },
+  containermap: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  map: {
+    width: "100%",
+    height: "100%",
+   
+  },
+
+
+});
