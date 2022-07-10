@@ -52,7 +52,7 @@ const listingConst = [{
 
 
 
-function ListingsScreen( {navigation} ) {
+function ListingsScreenAdoption( {navigation} ) {
 
     const [listings, setListings] = useState();
     const [error , setError] = useState();
@@ -71,26 +71,24 @@ function ListingsScreen( {navigation} ) {
         setLoading(true)
        // const response = await listingsApi.getListings();
        //const response = fetchLatestIncidencias();
-       //db.collection("incidencia").where('incidenceType.value', '==', 2).onSnapshot((querySnapshot)
-       db.collection("incidencia").where('incidenceType.value', '==', 1).orderBy("createdAt", "desc").onSnapshot((querySnapshot) => {
+
+       db.collection("incidencia").where('incidenceType.value', '==', 2).orderBy("createdAt", "desc").onSnapshot((querySnapshot) => {
    
-        const listings = [];
+        const listingsaux = [];
         querySnapshot.docs.forEach((doc) => {
-           
-           listings.push(doc.data())
+           console.log(doc.id)
+           listingsaux.push(doc.data())
         })
 
-        console.log(listings)
-        setListings(listings);
+        console.log(listingsaux)
+        setListings(listingsaux);
           })
 
         setLoading(false)
        
 
         setError(false)
-        setListings(listings);
-        console.log("voy a enseñar completo")
-        console.log(listings)
+       
 
         
         let item =  Object.keys(listings).map( function (key) {
@@ -100,7 +98,6 @@ function ListingsScreen( {navigation} ) {
         )
         console.log("show item")
         console.log(item)
-
         setListings(item);
         
     
@@ -111,15 +108,14 @@ function ListingsScreen( {navigation} ) {
       
       
        <Screen style={styles.screen}>
-             <AppText style={styles.text}> Animales perdidos </AppText>
+         <AppText style={styles.text}> Animales en adopción </AppText>
+
            { error && (
                <>
                 <AppText> Couldnt get the list</AppText>
                 <AppButton title="Retry" onPress={loadListings}> </AppButton>
                </>
            )}
-
-       
 
         <ActivityIndicator animating={loading} size="large" />
        
@@ -150,14 +146,14 @@ function ListingsScreen( {navigation} ) {
     );
 }
 
-export default ListingsScreen;
+export default ListingsScreenAdoption;
 
 const styles = StyleSheet.create({
 
     screen: {
         paddingHorizontal: "2%",
         backgroundColor: colors.light
-    },
+    }, 
     text: {
         textAlign: "center",
         marginTop: 20,

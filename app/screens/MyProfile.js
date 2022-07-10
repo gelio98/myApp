@@ -11,9 +11,9 @@ import Header from '../components/Header';
 import listingsApi from '../api/listings';
 import { object } from 'yup/lib/locale';
 import AppButton from '../components/AppButton';
-import { fetchLatestIncidencias, db } from "../api/firebase"
+import { auth, db, deleteByID } from "../api/firebase"
+import { LogBox } from 'react-native';
 console.disableYellowBox = true;
-
 
 
 
@@ -52,49 +52,69 @@ const listingConst = [{
 
 
 
-function ListingsScreen( {navigation} ) {
+function MyProfile( {navigation} ) {
 
     const [listings, setListings] = useState();
     const [error , setError] = useState();
     const [loading , setLoading] = useState();
 
-    useEffect(() => {
-        loadListings()
-    }, []);
+    const [userEmail, setEmailUser] = useState("")
 
-    React.useEffect(
+    
+    useEffect(
+        
+        
         () => navigation.addListener('focus', () => loadListings()),
         []
       );
 
-    const loadListings =  async () => {
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      if (user) {
+        setEmailUser(user.email)
+      }
+    })
+  
+   
+
+    return unsubscribe
+  }, [])
+
+    useEffect(() => {
+        loadListings()
+    }, []);
+
+
+    const loadListings =  () => {
+        const listingsaux = [];
         setLoading(true)
        // const response = await listingsApi.getListings();
        //const response = fetchLatestIncidencias();
        //db.collection("incidencia").where('incidenceType.value', '==', 2).onSnapshot((querySnapshot)
-       db.collection("incidencia").where('incidenceType.value', '==', 1).orderBy("createdAt", "desc").onSnapshot((querySnapshot) => {
+       console.log("este es el correo" + userEmail + "correo")
+       db.collection("incidencia").where('userEmail', '==', userEmail).orderBy("createdAt", "desc").onSnapshot((querySnapshot) => {
    
-        const listings = [];
+       
         querySnapshot.docs.forEach((doc) => {
            
-           listings.push(doc.data())
+            listingsaux.push(doc.data())
         })
 
-        console.log(listings)
-        setListings(listings);
+        console.log(listingsaux)
+        setListings(listingsaux);
           })
 
         setLoading(false)
        
 
         setError(false)
-        setListings(listings);
+        setListings(listingsaux);
         console.log("voy a enseñar completo")
         console.log(listings)
 
         
-        let item =  Object.keys(listings).map( function (key) {
-          return listings[key]
+        let item =  Object.keys(listingsaux).map( function (key) {
+          return listingsaux[key]
        }
            
         )
@@ -102,7 +122,6 @@ function ListingsScreen( {navigation} ) {
         console.log(item)
 
         setListings(item);
-        
     
     }
 
@@ -111,7 +130,7 @@ function ListingsScreen( {navigation} ) {
       
       
        <Screen style={styles.screen}>
-             <AppText style={styles.text}> Animales perdidos </AppText>
+        <AppText style={styles.text}> Mis incidencias </AppText>
            { error && (
                <>
                 <AppText> Couldnt get the list</AppText>
@@ -119,8 +138,7 @@ function ListingsScreen( {navigation} ) {
                </>
            )}
 
-       
-
+  
         <ActivityIndicator animating={loading} size="large" />
        
            <FlatList
@@ -132,6 +150,12 @@ function ListingsScreen( {navigation} ) {
             description = {item.description}
             image = {item.imgURL}
             onPress={() => navigation.navigate("ListingDetails", item )}
+            onLongPress={async () =>{ 
+              
+                 await deleteByID(item.id) 
+                loadListings()
+                
+              }}
             />
             }
             
@@ -150,14 +174,14 @@ function ListingsScreen( {navigation} ) {
     );
 }
 
-export default ListingsScreen;
+export default MyProfile;
 
 const styles = StyleSheet.create({
 
     screen: {
         paddingHorizontal: "2%",
         backgroundColor: colors.light
-    },
+    }, 
     text: {
         textAlign: "center",
         marginTop: 20,

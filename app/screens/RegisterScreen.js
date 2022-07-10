@@ -48,12 +48,6 @@ function RegisterScreen() {
         validationSchema={validationSchema}
       >
         <FormField
-          autoCorrect={false}
-          icon="account"
-          name="name"
-          placeholder="Name"
-        />
-        <FormField
           autoCapitalize="none"
           autoCorrect={false}
           icon="email"
@@ -68,12 +62,23 @@ function RegisterScreen() {
           autoCorrect={false}
           icon="lock"
           name="password"
-          placeholder="Password"
+          placeholder="Contraseña"
           secureTextEntry
          
           textContentType="password"
         />
-        <SubmitButton title="Register" />
+
+          <FormField
+          autoCapitalize="none"
+          autoCorrect={false}
+          icon="lock"
+          name="password"
+          placeholder="Repite la contraseña"
+          secureTextEntry
+         
+          textContentType="password"
+        />
+        <SubmitButton title="Registrar" />
       </Form>
     </Screen>
   );

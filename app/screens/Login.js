@@ -185,7 +185,7 @@ function Login( {navigation} ) {
             <Image
                  source={require("../assets/huella.png")} style={styles.imageIconStyle}
          ></Image>
-            <Text style={styles.textStyle}> Don't you have an account? Join the community! </Text>
+            <Text style={styles.textStyle}> ¿No tienes cuenta? Únete a nosotros </Text>
             </View> 
             </TouchableOpacity>
          
